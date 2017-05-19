@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/card_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:layout_margin="@dimen/card_margin"
+        android:elevation="3dp"
+        card_view:cardCornerRadius="4dp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/layout_title"
+                android:orientation="horizontal">
+            <TextView
+                android:id="@+id/rating"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:textSize="13dp"
+                android:textColor="#ffffff"
+                android:layout_marginTop="8dp"
+                android:layout_marginRight="8dp"
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp"
+                android:gravity="center"
+                android:background="@drawable/rounded_corner"/>
+
+            <TextView
+
+                android:id="@+id/title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
+                android:layout_marginTop="8dp"
+                android:textColor="@color/venue_title"
+                android:textSize="@dimen/venue_title"/>
+                <!--android:background="#FF0000"/>-->
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/layout_subtitle"
+                android:layout_below="@+id/layout_title">
+            <TextView
+                android:id="@+id/distance"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="8dp"
+                android:textSize="11dp"/>
+                <!--android:background="#00FF00"/>-->
+                <!--android:layout_marginBottom="10dp"-->
+
+
+            <TextView
+                android:id="@+id/category"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:layout_marginLeft="8dp"
+                android:textSize="@dimen/details"/>
+                <!--android:background="#0000FF"/>-->
+            </RelativeLayout>
+
+            <TextView
+                android:id="@+id/stat"
+                android:layout_marginLeft="8dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/layout_subtitle"
+                android:textSize="@dimen/details"/>
+                <!--android:background="#FFFF00"/>-->
+
+            <HorizontalScrollView
+                android:id="@+id/horizontal_scroll"
+                android:layout_width="match_parent"
+                android:layout_height="105dp"
+                android:layout_below="@+id/stat"
+                android:scrollbars="none">
+                <!--android:background="#FF0000">-->
+                <!--android:background="?attr/selectableItemBackgroundBorderless">-->
+
+                <LinearLayout
+                    android:id="@+id/linear"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="5dp"
+                    android:orientation="horizontal" >
+                </LinearLayout>
+
+            </HorizontalScrollView>
+
+            <!--<ImageView
+                android:id="@+id/thumbnail"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/venue_cover_height"
+                android:layout_below="@+id/stat"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:clickable="true"
+                android:scaleType="fitXY" />-->
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:id="@+id/addressLayout"
+                android:layout_below="@id/horizontal_scroll"
+                android:layout_marginLeft="8dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Address"
+                    android:textSize="@dimen/details" />
+
+
+                <TextView
+                    android:id="@+id/address"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="@dimen/venue_title_padding"
+                    android:textSize="@dimen/details" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:id="@+id/timingLayout"
+                android:paddingBottom="@dimen/details_padding_bottom"
+                android:layout_below="@id/addressLayout"
+                android:paddingLeft="@dimen/venue_title_padding"
+                android:paddingRight="@dimen/venue_title_padding">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Timing  "
+                    android:textSize="@dimen/details" />
+
+
+                <TextView
+                    android:id="@+id/timing"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="@dimen/venue_title_padding"
+                    android:textSize="@dimen/details"
+                    android:layout_marginBottom="8dp"/>
+
+            </LinearLayout>
+
+
+
+            <ImageView
+                android:id="@+id/overflow"
+                android:layout_width="@dimen/ic_venue_overflow_width"
+                android:layout_height="@dimen/ic_venue_overflow_height"
+                android:layout_alignParentRight="true"
+                android:layout_below="@id/horizontal_scroll"
+                android:layout_marginTop="@dimen/ic_venue_overflow_margin_top"
+                android:scaleType="centerCrop"
+                android:src="@drawable/ic_dots" />
+
+        </RelativeLayout>
+
+    </android.support.v7.widget.CardView>
+
+</LinearLayout>

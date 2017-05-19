@@ -1,0 +1,15 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.example.android.myapplication.MainActivity">
+    <item
+        android:id="@+id/sortByRating"
+        android:orderInCategory="100"
+        android:title="Sort by Rating"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/sortByDistance"
+        android:orderInCategory="100"
+        android:title="Sort by Distance"
+        app:showAsAction="never" />
+</menu>
