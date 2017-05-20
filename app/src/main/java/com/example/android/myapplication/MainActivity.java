@@ -67,7 +67,7 @@ public class MainActivity extends AppCompatActivity implements ConnectionCallbac
     private Location mLastLocation;
 
     // Google client to interact with Google API
-    private GoogleApiClient mGoogleApiClient;
+    private static GoogleApiClient mGoogleApiClient;
 
 
     private LocationRequest mLocationRequest;
@@ -99,6 +99,7 @@ public class MainActivity extends AppCompatActivity implements ConnectionCallbac
         setContentView(com.example.android.myapplication.R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(com.example.android.myapplication.R.id.toolbar);
         setSupportActionBar(toolbar);
+        setupGoogleApiClient();
 
         initProgressDialog();
 
@@ -146,7 +147,7 @@ public class MainActivity extends AppCompatActivity implements ConnectionCallbac
                     }
                 }
         );
-        setupGoogleApiClient();
+        //setupGoogleApiClient();
     }
 
     public void initDatabase(){
