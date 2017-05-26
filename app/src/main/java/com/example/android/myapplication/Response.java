@@ -27,22 +27,21 @@ import static com.example.android.myapplication.MainActivity.venuesList;
  * Created by Shreyas_Dhoot on 5/10/2017.
  */
 
-class foursquare extends AsyncTask<View, Void, String> {
+class Response extends AsyncTask<View, Void, String> {
 
-    RecyclerView recyclerView;
-
-    private VenueAdapter myAdapter;
-    private String temp;
     private final String CLIENT_ID = "Y5OO4ER5INNX034EARQRNY2NR1CNWNKNZ04L0IEUYJNLLFOS";
     private final String CLIENT_SECRET = "0ZUI1RJHNUTAAGVP503PZBZOMPEXHUQ3S33BPGXZR00LOO1U";
-    Context mContext;
-    private ProgressDialog mProgressDialog;
-    private AlertDialog alert;
 
-    String latitude = "18.5204";
-    String longitude = "73.8567";
 
-    foursquare(Context mContext, RecyclerView recyclerView, double latitude, double longitude){
+    private RecyclerView        recyclerView;
+    private VenueAdapter        myAdapter;
+    private Context             mContext;
+    private ProgressDialog      mProgressDialog;
+    private AlertDialog.Builder alert;
+    private String              latitude;
+    private String              longitude;
+
+    Response(Context mContext, RecyclerView recyclerView, double latitude, double longitude){
         this.latitude = Double.toString(latitude);
         this.longitude = Double.toString(longitude);
         this.mContext = mContext;
@@ -51,17 +50,6 @@ class foursquare extends AsyncTask<View, Void, String> {
         initAlertDialog();
     }
 
-    @Override
-    protected String doInBackground(View... urls) {
-        // make Call to the url
-        temp = makeCall("https://api.foursquare.com/v2/venues/explore?client_id=" + CLIENT_ID + "&client_secret=" + CLIENT_SECRET +"&section=food&radius=10000&limit=30&venuePhotos=1&v=20130815&ll=" + latitude + "," + longitude);
-        return "";
-    }
-
-    @Override
-    protected void onPreExecute() {
-        mProgressDialog.show();
-        }
     private void initProgressDialog(){
         mProgressDialog = new ProgressDialog(mContext);
         mProgressDialog.setMessage("Please Wait ");
@@ -70,48 +58,37 @@ class foursquare extends AsyncTask<View, Void, String> {
     }
 
     private void initAlertDialog(){
+        alert = new AlertDialog.Builder(mContext)
+                .setTitle("No Internet Connection")
+                .setMessage("Make sure that Wi-fi or cellular mobile data is turned on, then try again.")
+                .setPositiveButton("Retry", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        new Response(mContext,recyclerView, Double.parseDouble(latitude), Double.parseDouble(longitude)).execute();
+                    }
+                })
+                .setNegativeButton("close", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        if(db.getVenuesCount() > 0) {
+                            venuesList = db.getAllVenues();
+                            Collections.sort(venuesList,new VenueDistanceComparator());
+                            myAdapter = new VenueAdapter(mContext, venuesList);
+                            recyclerView.setAdapter(myAdapter);
+                            //myAdapter.notifyDataSetChanged();
+                        }
+                    }
+                })
+                .setIcon(android.R.drawable.ic_dialog_alert);
+
     }
 
     @Override
-    protected void onPostExecute(String result) {
-        mProgressDialog.dismiss();
-        if (temp.equals("")) {
-            // we have an error to the call
-            // we can also stop the progress bar
-            alert = new AlertDialog.Builder(mContext)
-                    .setTitle("No Internet Connection")
-                    .setMessage("Make sure that Wi-fi or cellular mobile data is turned on, then try again.")
-                    .setPositiveButton("Retry", new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int which) {
-                            new foursquare(mContext,recyclerView, Double.parseDouble(latitude), Double.parseDouble(longitude)).execute();
-                        }
-                    })
-                    .setNegativeButton("close", new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int which) {
-                            if(db.getVenuesCount() > 0) {
-                                venuesList = db.getAllVenues();
-                                Collections.sort(venuesList,new VenueDistanceComparator());
-                                myAdapter = new VenueAdapter(mContext, venuesList);
-                                recyclerView.setAdapter(myAdapter);
-                                //myAdapter.notifyDataSetChanged();
-                            }
-                        }
-                    })
-                    .setIcon(android.R.drawable.ic_dialog_alert)
-                    .show();
-        } else if (!temp.equals("")){
-            // parseFoursquare venues search result
-
-            venuesList = parseFoursquare(temp);
-            Collections.sort(venuesList,new VenueDistanceComparator());
-            myAdapter = new VenueAdapter(mContext, venuesList);
-            recyclerView.setAdapter(myAdapter);
-        }
+    protected String doInBackground(View... urls) {
+        // make Call to the url
+        String temp = makeCall("https://api.foursquare.com/v2/venues/explore?client_id=" + CLIENT_ID + "&client_secret=" + CLIENT_SECRET +"&section=food&radius=10000&limit=30&venuePhotos=1&v=20130815&ll=" + latitude + "," + longitude);
+        return temp;
     }
 
-
     public static String makeCall(String urlString) {
-
         StringBuffer chaine = new StringBuffer("");
         try {
             URL url = new URL(urlString);
@@ -134,6 +111,28 @@ class foursquare extends AsyncTask<View, Void, String> {
         }
         // trim the whitespaces
         return (chaine.toString()).trim();
+    }
+
+    @Override
+    protected void onPreExecute() {
+        mProgressDialog.show();
+    }
+
+    @Override
+    protected void onPostExecute(String result) {
+        mProgressDialog.dismiss();
+        if (result.equals("")) {
+            // we have an error to the call
+            // we can also stop the progress bar
+            alert.show();
+        } else if (!result.equals("")){
+            // parseFoursquare venues search result
+
+            venuesList = parseFoursquare(result);
+            Collections.sort(venuesList,new VenueDistanceComparator());
+            myAdapter = new VenueAdapter(mContext, venuesList);
+            recyclerView.setAdapter(myAdapter);
+        }
     }
 
     private static ArrayList<VenueObject> parseFoursquare(final String response) {
