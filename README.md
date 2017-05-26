@@ -8,4 +8,5 @@ Features
 - User Friendly Interface
 
 You can checkout the Demo Video.
+
 Note :- Before starting the app, open maps to detect your current location or else the app will take lot of time to detect your location
