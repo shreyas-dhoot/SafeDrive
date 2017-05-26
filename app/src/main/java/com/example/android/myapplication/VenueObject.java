@@ -10,10 +10,11 @@ public class VenueObject {
 	private String city;
 	private String venueID;
 	private String category;
-	private String addressArray[];
 	private String address;
 	private float distance;
-	private int likes, checkincount, tipcount;
+	private int likes;
+	private int	checkincount;
+	private int tipcount;
 	private float rating;
 	private String stat;
 	private String photoJSON;
@@ -58,7 +59,6 @@ public class VenueObject {
 			this.address = address.getString(0);
 			//this.addressArray = new String[length];
 			for (i = 1; i < length; i++)
-
 				//this.addressArray[i] = address.getString(i);
 				this.address += ", " + address.getString(i);
 		}

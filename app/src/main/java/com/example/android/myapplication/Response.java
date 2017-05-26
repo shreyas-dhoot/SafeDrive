@@ -73,7 +73,6 @@ class Response extends AsyncTask<View, Void, String> {
                             Collections.sort(venuesList,new VenueDistanceComparator());
                             myAdapter = new VenueAdapter(mContext, venuesList);
                             recyclerView.setAdapter(myAdapter);
-                            //myAdapter.notifyDataSetChanged();
                         }
                     }
                 })
@@ -148,9 +147,9 @@ class Response extends AsyncTask<View, Void, String> {
                 if (jsonObject.getJSONObject("response").has("groups")) {
                     db.deleteAllVenues();
                     JSONArray jsonArray = jsonObject.getJSONObject("response").getJSONArray("groups").getJSONObject(0).getJSONArray("items");
-                    int b = jsonArray.length();
+                    int venueCount = jsonArray.length();
 
-                    for (int i = 0; i < b; i++) {
+                    for (int i = 0; i < venueCount; i++) {
                         VenueObject poi = new VenueObject();
                         JSONObject venue = jsonArray.getJSONObject(i).getJSONObject("venue");
                         if (venue.has("name")) {
@@ -185,7 +184,7 @@ class Response extends AsyncTask<View, Void, String> {
 
         } catch (Exception e) {
             e.printStackTrace();
-            return new ArrayList<VenueObject>();
+            return new ArrayList<>();
         }
         return temp;
     }
