@@ -1,6 +1,7 @@
 package com.example.android.myapplication;
 
 import android.app.Activity;
+import android.app.NotificationManager;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -15,6 +16,7 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.app.NotificationCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -48,9 +50,11 @@ import com.google.android.gms.location.LocationSettingsResult;
 import com.google.android.gms.location.LocationSettingsStates;
 import com.google.android.gms.location.LocationSettingsStatusCodes;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
-
+import java.util.Date;
+import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity implements ConnectionCallbacks,
         OnConnectionFailedListener, com.google.android.gms.location.LocationListener {
@@ -76,6 +80,7 @@ public class MainActivity extends AppCompatActivity implements ConnectionCallbac
     private final int UPDATE_INTERVAL = 10000000; // 10 sec
     private final int FASTEST_INTERVAL = 5000000; // 5 sec
     private final int DISPLACEMENT = 10000; // 10 meters
+    private int notificationID;
 
     private final int REQUEST_LOCATION = 2;
 
@@ -83,13 +88,14 @@ public class MainActivity extends AppCompatActivity implements ConnectionCallbac
     static int SORTING = 0; //1 - RATING
                             //0 - DISTANCE
 
-    static boolean INAPPDRIVERMODE = false;
-    static boolean DRIVERMODE = false;
+    static boolean DRIVERMODE = true;
     private boolean refresh_activity = true;
     private boolean isGPSOn = false;
     private ProgressDialog mProgressDialog;
     public static DatabaseHandler db;
     private VenueAdapter myAdapter;
+    NotificationCompat.Builder mBuilder;
+    NotificationManager mNotificationManager;
 
     private double latitude, longitude;
 
@@ -108,6 +114,9 @@ public class MainActivity extends AppCompatActivity implements ConnectionCallbac
         initCollapsingToolbar();
 
         initDatabase();
+
+        initDriverModeNotification();
+
 
         recyclerView = (RecyclerView) findViewById(com.example.android.myapplication.R.id.recycler_view);
         swipeRefreshLayout = (SwipeRefreshLayout) findViewById(com.example.android.myapplication.R.id.swipe_refresh_layout);
@@ -149,7 +158,31 @@ public class MainActivity extends AppCompatActivity implements ConnectionCallbac
                     }
                 }
         );
+        createDriverModeNotification();
         setupGoogleApiClient();
+    }
+
+
+
+    public void initDriverModeNotification(){
+        mBuilder = new NotificationCompat.Builder(this);
+        mBuilder.setSmallIcon(R.drawable.logo);
+        mBuilder.setContentTitle("Driver Mode Enabled");
+        mBuilder.setContentText("Your calls will be blocked if above a speed limit");
+        mBuilder.setOngoing(true);
+    }
+
+    public void createDriverModeNotification(){
+        mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+        notificationID = createID();
+        mNotificationManager.notify(notificationID, mBuilder.build());
+
+    }
+
+    public int createID(){
+        Date now = new Date();
+        int id = Integer.parseInt(new SimpleDateFormat("ddHHmmss",  Locale.US).format(now));
+        return id;
     }
 
     public void initDatabase(){
@@ -340,24 +373,15 @@ public class MainActivity extends AppCompatActivity implements ConnectionCallbac
                 }
                 SORTING = 0;
                 return true;
-            case R.id.inAppDriverMode:
-                if(item.isChecked()){
-                    // If item already checked then unchecked it
-                    item.setChecked(false);
-                    INAPPDRIVERMODE = false;
-                }else{
-                    // If item is unchecked then checked it
-                    item.setChecked(true);
-                    INAPPDRIVERMODE = true;
-                }
-                return true;
             case R.id.driverMode:
                 if(item.isChecked()){
                     // If item already checked then unchecked it
+                    mNotificationManager.cancel(notificationID);
                     item.setChecked(false);
                     DRIVERMODE = false;
                 }else{
                     // If item is unchecked then checked it
+                    createDriverModeNotification();
                     item.setChecked(true);
                     DRIVERMODE = true;
                 }
@@ -565,6 +589,7 @@ public class MainActivity extends AppCompatActivity implements ConnectionCallbac
         if (mGoogleApiClient.isConnected()) {
             mGoogleApiClient.disconnect();
         }
+        mNotificationManager.cancelAll();
     }
 
     @Override
