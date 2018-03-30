@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/colorPrimaryDark"
+    android:weightSum="1">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Vehicle Type"/>
+    <RadioGroup
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <RadioButton android:id="@+id/bike"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Bike"
+            android:checked="true"
+            android:buttonTint="@color/Black"
+            android:onClick="onvehicle"/>
+        <RadioButton android:id="@+id/car"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Car"
+            android:buttonTint="@color/Black"
+            android:onClick="onvehicle"/>
+        <RadioButton android:id="@+id/bus"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Bus"
+            android:buttonTint="@color/Black"
+            android:onClick="onvehicle"/>
+    </RadioGroup>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Weather"/>
+    <RadioGroup
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <RadioButton android:id="@+id/thunder"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Thunderstorm"
+            android:checked="true"
+            android:buttonTint="@color/Black"
+            android:onClick="onweather"/>
+        <RadioButton android:id="@+id/rain"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Rain"
+            android:buttonTint="@color/Black"
+            android:onClick="onweather"/>
+        <RadioButton android:id="@+id/cloudy"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Cloudy"
+            android:buttonTint="@color/Black"
+            android:onClick="onweather"/>
+    </RadioGroup>
+
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Start Navigation"
+        android:onClick="Start"/>
+
+    <SeekBar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/jam"
+        android:thumbTint="@color/Black"
+        android:progressTint="@color/Black"
+        android:layout_weight="0.30" />
+
+    <SeekBar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/speedo"
+        android:thumbTint="@color/Black"
+        android:progressTint="@color/Black"
+        android:layout_weight="0.30" />
+
+    <TextView
+        android:text="0 kmph"
+        android:textAlignment="center"
+        android:textSize="40dp"
+        android:paddingTop="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:id="@+id/viewspeed" />
+
+    <TextView
+        android:text="Call Rejection Off"
+        android:layout_marginTop="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="25dp"
+        android:textSize="20dp"
+        android:textAlignment="center"
+        android:id="@+id/mode" />
+
+
+
+
+</LinearLayout>
