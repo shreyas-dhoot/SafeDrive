@@ -30,7 +30,6 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.RecyclerView;
 import android.util.TypedValue;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.google.android.gms.common.ConnectionResult;
@@ -118,7 +117,7 @@ public class MainActivity extends AppCompatActivity implements ConnectionCallbac
         recyclerView.setItemAnimator(new DefaultItemAnimator());
 
         try {
-            Glide.with(this).load(com.example.android.myapplication.R.drawable.food).into((ImageView) findViewById(com.example.android.myapplication.R.id.backdrop));
+            Glide.with(this).load(R.drawable.food).into((ImageView) findViewById(com.example.android.myapplication.R.id.backdrop));
         } catch (Exception e) {
             e.printStackTrace();
         }

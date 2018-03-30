@@ -128,7 +128,7 @@ class Response extends AsyncTask<View, Void, String> {
             // parseFoursquare venues search result
 
             venuesList = parseFoursquare(result);
-            Collections.sort(venuesList,new VenueDistanceComparator());
+            //Collections.sort(venuesList,new VenueDistanceComparator());
             myAdapter = new VenueAdapter(mContext, venuesList);
             recyclerView.setAdapter(myAdapter);
         }
@@ -179,6 +179,16 @@ class Response extends AsyncTask<View, Void, String> {
                             }
                         }
                     }
+                    VenueObject poi = new VenueObject();
+                    poi.setName("Vaishali Restaurant");
+                    poi.setvenueID("DEFAULT");
+                    poi.setDistance(2200);
+                    poi.setAddress("Fergusson College Road, Opposite British Library");
+                    poi.setCity("Pune");
+                    poi.setCategory("Fast Food");
+                    poi.setRating(7);
+                    poi.setStat(63,63);
+                    temp.add(0,poi);
                 }
             }
 
