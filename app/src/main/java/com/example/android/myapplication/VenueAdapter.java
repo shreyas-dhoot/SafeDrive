@@ -178,15 +178,20 @@ public class VenueAdapter extends RecyclerView.Adapter<VenueAdapter.MyViewHolder
         holder.category.setText(venue.getCategory());
         holder.timing.setText("22:00 to 2:00");
 
-
-        if(venue.getphotJSON().equals("")) {
-            new downloadData(holder, PREFIX_URL + venue.getvenueID() + "/photos" + SUFFIX_URL, venue).execute();
-            new downloadData(holder, PREFIX_URL + venue.getvenueID() + "/likes" + SUFFIX_URL, venue).execute();
+        if(!venue.getvenueID().equals("DEFAULT")) {
+            if(venue.getphotJSON().equals("")) {
+                new downloadData(holder, PREFIX_URL + venue.getvenueID() + "/photos" + SUFFIX_URL, venue).execute();
+                new downloadData(holder, PREFIX_URL + venue.getvenueID() + "/likes" + SUFFIX_URL, venue).execute();
+            }
+            else {
+                parsePhotoANDLikesJSON(venue.getphotJSON(), holder, venue);
+                int aa = venue.getLikes();
+                holder.stat.setText(Integer.toString(aa) + " Likes : " + stat);
+            }
         }
         else {
-            parsePhotoANDLikesJSON(venue.getphotJSON(), holder, venue);
-            int aa = venue.getLikes();
-            holder.stat.setText(Integer.toString(aa) + " Likes : "+stat);
+            new downloadData(holder, PREFIX_URL + "4b3b174af964a520cd7025e3" + "/photos" + SUFFIX_URL, venue).execute();
+            new downloadData(holder, PREFIX_URL + "4b3b174af964a520cd7025e3" + "/likes" + SUFFIX_URL, venue).execute();
         }
         // loading album cover using Glide library
 //        Glide.with(mContext).load(img).into(holder.thumbnail);
