@@ -18,6 +18,55 @@
             android:ems="10"
             android:id="@+id/speed" />
     </com.github.florent37.materialtextfield.MaterialTextField>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Vehicle Type"/>
+    <RadioGroup
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <RadioButton android:id="@+id/bike"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Bike"
+            android:onClick="onvehicle"/>
+        <RadioButton android:id="@+id/car"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Car"
+            android:onClick="onvehicle"/>
+        <RadioButton android:id="@+id/bus"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Bus"
+            android:onClick="onvehicle"/>
+    </RadioGroup>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Select Location"/>
+    <RadioGroup
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <RadioButton android:id="@+id/lat1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="JM"
+            android:onClick="onlocation"/>
+        <RadioButton android:id="@+id/lat2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="FC"
+            android:onClick="onlocatin"/>
+        <RadioButton android:id="@+id/lat3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="College"
+            android:onClick="onlocation"/>
+    </RadioGroup>
 
 
     <Button
