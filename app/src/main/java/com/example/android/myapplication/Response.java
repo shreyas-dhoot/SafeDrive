@@ -29,8 +29,8 @@ import static com.example.android.myapplication.MainActivity.venuesList;
 
 class Response extends AsyncTask<View, Void, String> {
 
-    private final String CLIENT_ID = "Y5OO4ER5INNX034EARQRNY2NR1CNWNKNZ04L0IEUYJNLLFOS";
-    private final String CLIENT_SECRET = "0ZUI1RJHNUTAAGVP503PZBZOMPEXHUQ3S33BPGXZR00LOO1U";
+    private final String CLIENT_ID = "553TDCNOZW5A3KAJW5PVPYP0KXSMYONPKNXPJSYHUNUE2M1C";
+    private final String CLIENT_SECRET = "XRXHA01SCCOTOERO0UILSKGKIGDAUAUU1H4AGBBAXPR20TX0";
 
 
     private RecyclerView        recyclerView;
@@ -83,7 +83,7 @@ class Response extends AsyncTask<View, Void, String> {
     @Override
     protected String doInBackground(View... urls) {
         // make Call to the url
-        String temp = makeCall("https://api.foursquare.com/v2/venues/explore?client_id=" + CLIENT_ID + "&client_secret=" + CLIENT_SECRET +"&section=trending&radius=10000&limit=10&venuePhotos=1&v=20130815&ll=" + latitude + "," + longitude);
+        String temp = makeCall("https://api.foursquare.com/v2/venues/explore?client_id=" + CLIENT_ID + "&client_secret=" + CLIENT_SECRET +"&section=nextVenues&radius=10000&limit=10&venuePhotos=1&v=20130815&ll=" + latitude + "," + longitude);
         return temp;
     }
 

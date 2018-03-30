@@ -98,6 +98,7 @@ public class MainActivity extends AppCompatActivity implements ConnectionCallbac
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Toast.makeText(this, "Drive Mode is set!!", Toast.LENGTH_SHORT).show();
         setContentView(com.example.android.myapplication.R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(com.example.android.myapplication.R.id.toolbar);
         setSupportActionBar(toolbar);

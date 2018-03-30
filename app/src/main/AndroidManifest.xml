@@ -11,7 +11,7 @@
     <application
         android:allowBackup="true"
         android:icon="@drawable/logo"
-        android:label="@string/app_name"
+        android:label="Safe Drive"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <meta-data
