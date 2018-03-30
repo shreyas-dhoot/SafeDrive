@@ -429,7 +429,7 @@ public class MainActivity extends AppCompatActivity implements ConnectionCallbac
                     public void handleMessage(Message msg) {
                         //Toast.makeText(getApplicationContext(), latitude + ", " + longitude,
                         //    Toast.LENGTH_LONG).show();
-                        new foursquare(MainActivity.this,recyclerView, latitude, longitude).execute();
+                        new Response(MainActivity.this,recyclerView, latitude, longitude).execute();
                     }
 
                 };
