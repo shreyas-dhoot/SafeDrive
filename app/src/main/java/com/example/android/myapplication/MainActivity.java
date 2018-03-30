@@ -83,6 +83,8 @@ public class MainActivity extends AppCompatActivity implements ConnectionCallbac
     static int SORTING = 0; //1 - RATING
                             //0 - DISTANCE
 
+    static boolean INAPPDRIVERMODE = false;
+    static boolean DRIVERMODE = false;
     private boolean refresh_activity = true;
     private boolean isGPSOn = false;
     private ProgressDialog mProgressDialog;
@@ -336,6 +338,28 @@ public class MainActivity extends AppCompatActivity implements ConnectionCallbac
                     snackbar.show();
                 }
                 SORTING = 0;
+                return true;
+            case R.id.inAppDriverMode:
+                if(item.isChecked()){
+                    // If item already checked then unchecked it
+                    item.setChecked(false);
+                    INAPPDRIVERMODE = false;
+                }else{
+                    // If item is unchecked then checked it
+                    item.setChecked(true);
+                    INAPPDRIVERMODE = true;
+                }
+                return true;
+            case R.id.driverMode:
+                if(item.isChecked()){
+                    // If item already checked then unchecked it
+                    item.setChecked(false);
+                    DRIVERMODE = false;
+                }else{
+                    // If item is unchecked then checked it
+                    item.setChecked(true);
+                    DRIVERMODE = true;
+                }
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
