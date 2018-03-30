@@ -1,11 +1,15 @@
 package com.example.android.myapplication;
 
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
 import android.os.AsyncTask;
+import android.support.v7.app.AlertDialog;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
 import android.util.TypedValue;
@@ -41,45 +45,64 @@ import java.util.List;
 import static com.example.android.myapplication.MainActivity.db;
 
 
+
 /**
  * Created by Shreyas_Dhoot on 5/10/2017.
  */
 
-public class VenueAdapter extends RecyclerView.Adapter<VenueAdapter.MyViewHolder>{
-    private Context mContext;
-    private List<VenueObject> VenueList;
-    private String SIZE_ICON = "32";
-    private String SIZE_PHOTO = "100x100";
-    private ImageLoader imageLoader;
+public class VenueAdapter extends RecyclerView.Adapter<VenueAdapter.MyViewHolder> {
+
+
+    private final String        CLIENT_ID = "Y5OO4ER5INNX034EARQRNY2NR1CNWNKNZ04L0IEUYJNLLFOS";
+    private final String        CLIENT_SECRET = "0ZUI1RJHNUTAAGVP503PZBZOMPEXHUQ3S33BPGXZR00LOO1U";
+    private final String        PREFIX_URL = "https://api.foursquare.com/v2/venues/";
+    private final String        SUFFIX_URL = "?client_id="+CLIENT_ID+"&client_secret="+CLIENT_SECRET+"&v=20130815";
+    private final String        SIZE_PHOTO = "100x100";
+
+    private Context             mContext;
+    private List<VenueObject>   venueList;
+    private ImageLoader         imageLoader;
     private DisplayImageOptions options;
-    private final String CLIENT_ID = "Y5OO4ER5INNX034EARQRNY2NR1CNWNKNZ04L0IEUYJNLLFOS";
-    private final String CLIENT_SECRET = "0ZUI1RJHNUTAAGVP503PZBZOMPEXHUQ3S33BPGXZR00LOO1U";
-    private String address = "";
-    private String venueID = "";
-    private final String PREFIX_URL = "https://api.foursquare.com/v2/venues/";
-    private final String SUFFIX_URL = "?client_id="+CLIENT_ID+"&client_secret="+CLIENT_SECRET+"&v=20130815";
-    private String stat = "";
-    private float rating = 0;
-
-
-
+    private String              address;
+    private String              stat;
+    private float               rating;
 
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
-        public TextView title, category, address, timing, distance, rating, stat;
-        public ImageView thumbnail, overflow;
-        LinearLayout addressLayout;
-        LinearLayout timingLayout;
-        LinearLayout imageLayout;
+        public TextView     title, category, address, timing, distance, rating, stat;
+        public ImageView    overflow;
+        public LinearLayout addressLayout;
+        public LinearLayout timingLayout;
+        public LinearLayout imageLayout;
 
 
         public MyViewHolder(View view) {
             super(view);
+            final Context context = view.getContext();
+
+            view.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                    builder
+                            .setTitle("Navigate")
+                            .setMessage("Do you want to start?")
+                            .setIcon(android.R.drawable.ic_dialog_alert)
+                            .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int which) {
+                                    Intent intent = new Intent(context, Navigate.class);
+
+                                    context.startActivity(intent);
+                                }
+                            })
+                            .setNegativeButton("No", null)                      //Do nothing on no
+                            .show();
+
+                }
+            });
             title = (TextView) view.findViewById(R.id.title);
             category = (TextView) view.findViewById(R.id.category);
-            //thumbnail = (ImageView) view.findViewById(R.id.thumbnail);
             overflow = (ImageView) view.findViewById(R.id.overflow);
-            //icon = (CircleImageView) view.findViewById(R.id.venue_icon);
             address = (TextView) view.findViewById(R.id.address);
             timing = (TextView) view.findViewById(R.id.timing);
             addressLayout = (LinearLayout) view.findViewById(R.id.addressLayout);
@@ -93,7 +116,10 @@ public class VenueAdapter extends RecyclerView.Adapter<VenueAdapter.MyViewHolder
 
     public VenueAdapter(Context mContext, ArrayList<VenueObject> VenueList) {
         this.mContext = mContext;
-        this.VenueList = VenueList;
+        this.venueList = VenueList;
+        address = "";
+        rating = 0;
+        stat = "";
         initImageLoader();
     }
 
@@ -109,15 +135,14 @@ public class VenueAdapter extends RecyclerView.Adapter<VenueAdapter.MyViewHolder
 
     @Override
     public void onBindViewHolder(final MyViewHolder holder, int position) {
-
-
-        VenueObject venue = VenueList.get(position);
+        VenueObject venue = venueList.get(position);
         address = venue.getAddress();
         if(!address.equals("")) {
                 holder.address.setText(address);
         }
         else {
-            holder.timingLayout.setPadding(holder.timingLayout.getPaddingLeft(),dpToPx(10),holder.timingLayout.getPaddingRight(),holder.timingLayout.getPaddingBottom());
+            holder.timingLayout.setPadding(holder.timingLayout.getPaddingLeft(),
+                    dpToPx(10),holder.timingLayout.getPaddingRight(),holder.timingLayout.getPaddingBottom());
             holder.addressLayout.setVisibility(LinearLayout.GONE);
         }
         //Don't need overflow
@@ -174,6 +199,9 @@ public class VenueAdapter extends RecyclerView.Adapter<VenueAdapter.MyViewHolder
         });
     }
 
+    /*
+        Change the color according to the value of the rating
+     */
     public int getColor(int progress) {
         int startColor = Color.parseColor("#FF9B99");
         int endColor = Color.parseColor("#006400");
@@ -245,8 +273,6 @@ public class VenueAdapter extends RecyclerView.Adapter<VenueAdapter.MyViewHolder
 
         @Override
         protected void onPostExecute(String result) {
-
-
             parsePhotoANDLikesJSON(result, holder, venue);
             //imageLoader.displayImage(url, holder.thumbnail, options);
             //Glide.with(mContext).load(result).into(holder.thumbnail);
@@ -325,8 +351,6 @@ public class VenueAdapter extends RecyclerView.Adapter<VenueAdapter.MyViewHolder
 
     }
 
-
-
     private void showPopupMenu(View view) {
         // inflate menu
         PopupMenu popup = new PopupMenu(mContext, view);
@@ -358,7 +382,7 @@ public class VenueAdapter extends RecyclerView.Adapter<VenueAdapter.MyViewHolder
 
     @Override
     public int getItemCount() {
-        return VenueList.size();
+        return venueList.size();
     }
 
     private int dpToPx(int dp) {

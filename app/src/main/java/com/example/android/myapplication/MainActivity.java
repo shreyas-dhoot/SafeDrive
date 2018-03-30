@@ -405,7 +405,6 @@ public class MainActivity extends AppCompatActivity implements ConnectionCallbac
     @Override
     public void onLocationChanged(Location location) {
         mLastLocation = location;
-
         changeLocation();
     }
 
@@ -596,5 +595,4 @@ public class MainActivity extends AppCompatActivity implements ConnectionCallbac
     public void onConnectionSuspended(int arg0) {
         mGoogleApiClient.connect();
     }
-
 }

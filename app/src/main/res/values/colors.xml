@@ -6,4 +6,8 @@
     <color name="viewBg">#f1f5f8</color>
     <color name="venue_title">#4c4c4c</color>
     <color name="venue_rating">#FFFFFF</color>
+    <color name="Black">#000000</color>
+    <color name="White">#FFFFFF</color>
+    <color name="Background">#525850</color>
+
 </resources>
