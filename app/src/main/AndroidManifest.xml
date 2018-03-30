@@ -28,6 +28,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".Navigate"/>
+        <activity android:name=".Demo"/>
     </application>
 
 </manifest>
