@@ -30,7 +30,6 @@ public class Navigate extends AppCompatActivity{
     String vehicle = "0";
     String lat = null;
     String lon = null;
-
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
         int SDK_INT = android.os.Build.VERSION.SDK_INT;
@@ -76,6 +75,7 @@ public class Navigate extends AppCompatActivity{
                     mode.setText("Call Rejection Off");
                 else
                     mode.setText("Call Rejection On");
+                MainActivity.setCheck(!ch);
 
             }
         });
@@ -109,9 +109,10 @@ public class Navigate extends AppCompatActivity{
         lon = longi.getText().toString();
         boolean ch = sendtoserver(lat, lon, spd, vehicle);
         if(ch)
-            Toast.makeText(Navigate.this, "Yes", Toast.LENGTH_LONG).show();
+            mode.setText("Call Rejection Off");
         else
-            Toast.makeText(Navigate.this, "No", Toast.LENGTH_LONG).show();
+            mode.setText("Call Rejection On");
+        MainActivity.setCheck(!ch);
     }
 
     public boolean sendtoserver(String lat, String longi, String speed, String type){
@@ -151,5 +152,7 @@ public class Navigate extends AppCompatActivity{
 
         return ret;
     }
+
+
 
 }

@@ -72,6 +72,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/speedo"
         android:thumbTint="@color/Black"
+        android:progressTint="@color/Black"
         android:layout_weight="0.30" />
 
     <TextView

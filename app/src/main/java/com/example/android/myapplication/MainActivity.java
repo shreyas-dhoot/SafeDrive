@@ -58,7 +58,7 @@ public class MainActivity extends AppCompatActivity implements ConnectionCallbac
     SwipeRefreshLayout swipeRefreshLayout;
     RecyclerView recyclerView;
     MenuItem item1, item2;
-
+    public static boolean check = false;
     // LogCat tag
     private static final String TAG = MainActivity.class.getSimpleName();
 
@@ -595,5 +595,13 @@ public class MainActivity extends AppCompatActivity implements ConnectionCallbac
     @Override
     public void onConnectionSuspended(int arg0) {
         mGoogleApiClient.connect();
+    }
+
+    public static boolean getCheck(){
+        return check;
+    }
+
+    public static void setCheck(boolean ch){
+        check = ch;
     }
 }

@@ -29,8 +29,8 @@ import static com.example.android.myapplication.MainActivity.venuesList;
 
 class Response extends AsyncTask<View, Void, String> {
 
-    private final String CLIENT_ID = "553TDCNOZW5A3KAJW5PVPYP0KXSMYONPKNXPJSYHUNUE2M1C";
-    private final String CLIENT_SECRET = "XRXHA01SCCOTOERO0UILSKGKIGDAUAUU1H4AGBBAXPR20TX0";
+    private final String CLIENT_ID = "P5JRCNT0Q53CYFP1BPVCXVNYBBSPAEG5QGTXGZ2F5FEDYTSA";
+    private final String CLIENT_SECRET = "UJGODO0UKFU3QTXGYDJONYVVKJLFXGXAKFJSKFIVYQPR44SN";
 
 
     private RecyclerView        recyclerView;
