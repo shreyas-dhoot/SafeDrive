@@ -83,7 +83,7 @@ class Response extends AsyncTask<View, Void, String> {
     @Override
     protected String doInBackground(View... urls) {
         // make Call to the url
-        String temp = makeCall("https://api.foursquare.com/v2/venues/explore?client_id=" + CLIENT_ID + "&client_secret=" + CLIENT_SECRET +"&section=food&radius=10000&limit=30&venuePhotos=1&v=20130815&ll=" + latitude + "," + longitude);
+        String temp = makeCall("https://api.foursquare.com/v2/venues/explore?client_id=" + CLIENT_ID + "&client_secret=" + CLIENT_SECRET +"&section=trending&radius=10000&limit=10&venuePhotos=1&v=20130815&ll=" + latitude + "," + longitude);
         return temp;
     }
 

@@ -1,11 +1,15 @@
 package com.example.android.myapplication;
 
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
 import android.os.AsyncTask;
+import android.support.v7.app.AlertDialog;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
 import android.util.TypedValue;
@@ -41,11 +45,12 @@ import java.util.List;
 import static com.example.android.myapplication.MainActivity.db;
 
 
+
 /**
  * Created by Shreyas_Dhoot on 5/10/2017.
  */
 
-public class VenueAdapter extends RecyclerView.Adapter<VenueAdapter.MyViewHolder>{
+public class VenueAdapter extends RecyclerView.Adapter<VenueAdapter.MyViewHolder> {
 
 
     private final String        CLIENT_ID = "Y5OO4ER5INNX034EARQRNY2NR1CNWNKNZ04L0IEUYJNLLFOS";
@@ -73,6 +78,28 @@ public class VenueAdapter extends RecyclerView.Adapter<VenueAdapter.MyViewHolder
 
         public MyViewHolder(View view) {
             super(view);
+            final Context context = view.getContext();
+
+            view.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                    builder
+                            .setTitle("Navigate")
+                            .setMessage("Do you want to start?")
+                            .setIcon(android.R.drawable.ic_dialog_alert)
+                            .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int which) {
+                                    Intent intent = new Intent(context, Navigate.class);
+
+                                    context.startActivity(intent);
+                                }
+                            })
+                            .setNegativeButton("No", null)                      //Do nothing on no
+                            .show();
+
+                }
+            });
             title = (TextView) view.findViewById(R.id.title);
             category = (TextView) view.findViewById(R.id.category);
             overflow = (ImageView) view.findViewById(R.id.overflow);
