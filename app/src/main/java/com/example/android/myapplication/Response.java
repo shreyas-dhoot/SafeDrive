@@ -192,6 +192,17 @@ class Response extends AsyncTask<View, Void, String> {
                     poi.setRating(7);
                     poi.setStat(63,63);
                     temp.add(0,poi);
+
+                    poi = new VenueObject();
+                    poi.setName("Rupali Restaurant");
+                    poi.setvenueID("DEFAULT_2");
+                    poi.setDistance(2200);
+                    poi.setAddress("Fergusson College Road, Opposite British Library");
+                    poi.setCity("Pune");
+                    poi.setCategory("Fast Food");
+                    poi.setRating(7);
+                    poi.setStat(63,63);
+                    temp.add(1, poi);
                 }
             }
 

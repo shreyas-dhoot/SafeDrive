@@ -146,7 +146,6 @@ public class VenueAdapter extends RecyclerView.Adapter<VenueAdapter.MyViewHolder
 
     @Override
     public void onBindViewHolder(final MyViewHolder holder, int position) {
-
         VenueObject venue = venueList.get(position);
         address = venue.getAddress();
         if(!address.equals("")) {
