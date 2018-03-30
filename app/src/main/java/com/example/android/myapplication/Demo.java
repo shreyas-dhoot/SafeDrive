@@ -2,6 +2,8 @@ package com.example.android.myapplication;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 /**
@@ -29,10 +31,19 @@ public class Demo extends AppCompatActivity {
             {18.5298846264811,73.85717223935012}
     };
 
+    double time [] = {0.0075, 0.01786, 0.0234, 0.01722, 0.0197, 0.0178};
     public  void calldistance () {
         int i;
+        TextView latitude = (TextView)findViewById(R.id.lat);
+        TextView longitude = (TextView)findViewById(R.id.lon);
+        TextView vehicle= (TextView)findViewById(R.id.vehicle);
+        TextView call = (TextView)findViewById(R.id.call);
         for( i = 0; i < latlon.length - 1; i++) {
+            latitude.setText(String.valueOf(latlon[i][0]));
+            longitude.setText(String.valueOf(latlon[i][1]));
+            vehicle.setText("Car");
             double d = distance(latlon[i][0], latlon[i][1], latlon[i + 1][0], latlon[i + 1][1]);
+            double speed = d / time[i];
             Toast.makeText(this, "Distance = " + String.valueOf(d), Toast.LENGTH_SHORT).show();
 
         }

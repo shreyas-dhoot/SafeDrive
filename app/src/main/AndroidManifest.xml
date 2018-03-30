@@ -11,7 +11,7 @@
     <application
         android:allowBackup="true"
         android:icon="@drawable/logo"
-        android:label="Safe Drive"
+        android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <meta-data
@@ -19,7 +19,7 @@
             android:value="@integer/google_play_services_version" />
         <activity
             android:name=".MainActivity"
-            android:label="@string/app_name"
+            android:label="Trending Venues"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -28,6 +28,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".Navigate"/>
+        <activity android:name=".Demo"/>
     </application>
 
 </manifest>
