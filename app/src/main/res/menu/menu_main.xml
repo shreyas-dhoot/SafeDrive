@@ -4,12 +4,25 @@
     tools:context="com.example.android.myapplication.MainActivity">
     <item
         android:id="@+id/sortByRating"
-        android:orderInCategory="100"
+        android:orderInCategory="1"
         android:title="Sort by Rating"
         app:showAsAction="never" />
     <item
         android:id="@+id/sortByDistance"
-        android:orderInCategory="100"
+        android:orderInCategory="2"
         android:title="Sort by Distance"
         app:showAsAction="never" />
+    <item
+        android:id="@+id/inAppDriverMode"
+        android:orderInCategory="3"
+        android:title="In App Driver Mode"
+        android:checkable="true"
+        app:showAsAction="never"/>
+
+    <item
+        android:id="@+id/driverMode"
+        android:orderInCategory="4"
+        android:title="Driver Mode"
+        android:checkable="true"
+        app:showAsAction="never"/>
 </menu>

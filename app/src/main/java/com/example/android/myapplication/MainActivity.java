@@ -55,36 +55,45 @@ import java.util.Collections;
 public class MainActivity extends AppCompatActivity implements ConnectionCallbacks,
         OnConnectionFailedListener, com.google.android.gms.location.LocationListener {
 
-    private static final String  TAG = MainActivity.class.getSimpleName();      // LogCat tag
-    private static final int     PLAY_SERVICES_RESOLUTION_REQUEST = 1000;
+    SwipeRefreshLayout swipeRefreshLayout;
+    RecyclerView recyclerView;
+    MenuItem item1, item2;
 
-    public static int                    SORTING = 0;       //1 - RATING; 0 - DISTANCE
-    public static DatabaseHandler        db;
-    public static ArrayList<VenueObject> venuesList;
+    // LogCat tag
+    private static final String TAG = MainActivity.class.getSimpleName();
 
-    private static GoogleApiClient mGoogleApiClient;        // Google client to interact with Google API
+    private final static int PLAY_SERVICES_RESOLUTION_REQUEST = 1000;
 
-    private SwipeRefreshLayout   swipeRefreshLayout;
-    private RecyclerView         recyclerView;
-    private MenuItem             item1, item2;
-    private Location             mLastLocation;
-    private LocationRequest      mLocationRequest;
-    private VenueAdapter         myAdapter;
-    private boolean              refresh_activity = true;   //If true, then location is updated
-    private boolean              isGPSOn = false;
-    private double               latitude;
-    private double               longitude;
+    private Location mLastLocation;
+
+    // Google client to interact with Google API
+    private GoogleApiClient mGoogleApiClient;
 
 
+    private LocationRequest mLocationRequest;
 
     // Location updates intervals in sec
-    private final int UPDATE_INTERVAL = 1000; // 10 sec
-    private final int FASTEST_INTERVAL = 5000; // 5 sec
-    private final int DISPLACEMENT = 10; // 10 meters
-    private final int REQUEST_LOCATION = 2;             //Used as request code for location
-    private final int MY_ACCESS_FINE_LOCATION = 1;      //Used as request code for permission of ACCESS FINE LOCATION
+    private final int UPDATE_INTERVAL = 10000000; // 10 sec
+    private final int FASTEST_INTERVAL = 5000000; // 5 sec
+    private final int DISPLACEMENT = 10000; // 10 meters
 
+    private final int REQUEST_LOCATION = 2;
 
+    final private int MY_ACCESS_FINE_LOCATION = 1;
+    static int SORTING = 0; //1 - RATING
+                            //0 - DISTANCE
+
+    static boolean INAPPDRIVERMODE = false;
+    static boolean DRIVERMODE = false;
+    private boolean refresh_activity = true;
+    private boolean isGPSOn = false;
+    private ProgressDialog mProgressDialog;
+    public static DatabaseHandler db;
+    private VenueAdapter myAdapter;
+
+    private double latitude, longitude;
+
+    static ArrayList<VenueObject> venuesList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -93,11 +102,11 @@ public class MainActivity extends AppCompatActivity implements ConnectionCallbac
         Toolbar toolbar = (Toolbar) findViewById(com.example.android.myapplication.R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        initProgressDialog();
+
         initCollapsingToolbar();
 
         initDatabase();
-
-        setupGoogleApiClient();
 
         recyclerView = (RecyclerView) findViewById(com.example.android.myapplication.R.id.recycler_view);
         swipeRefreshLayout = (SwipeRefreshLayout) findViewById(com.example.android.myapplication.R.id.swipe_refresh_layout);
@@ -135,11 +144,17 @@ public class MainActivity extends AppCompatActivity implements ConnectionCallbac
                         refresh_activity = true;
                         isLocationOn();
                         swipeRefreshLayout.setRefreshing(false);
+                        //changeLocation();
                     }
                 }
         );
-        //setupGoogleApiClient();
+        setupGoogleApiClient();
     }
+
+    public void initDatabase(){
+        db = new com.example.android.myapplication.DatabaseHandler(this);
+    }
+
 
     private void setupGoogleApiClient() {
         // First we need to check availability of play services
@@ -190,8 +205,8 @@ public class MainActivity extends AppCompatActivity implements ConnectionCallbac
     }
 
     /*
-        Used to check if Location is on
-    */
+            Used to check if Location is on
+        */
     private void isLocationOn(){
         LocationSettingsRequest.Builder builder = new LocationSettingsRequest.Builder()
                     .addLocationRequest(mLocationRequest);
@@ -272,6 +287,7 @@ public class MainActivity extends AppCompatActivity implements ConnectionCallbac
             return;
         }
         LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, mLocationRequest, this);
+
     }
 
     /**
@@ -304,6 +320,8 @@ public class MainActivity extends AppCompatActivity implements ConnectionCallbac
                     Collections.sort(venuesList,new VenueRatingComparator());
                     myAdapter = new VenueAdapter(this, venuesList);
                     recyclerView.setAdapter(myAdapter);
+                    //Toast.makeText(getApplicationContext(), "Sorted by Rating",
+                    //        Toast.LENGTH_SHORT).show();
                     Snackbar snackbar = Snackbar.make(findViewById(R.id.root),"Sorted by Rating", Snackbar.LENGTH_SHORT);
                     snackbar.show();
                 }
@@ -314,23 +332,41 @@ public class MainActivity extends AppCompatActivity implements ConnectionCallbac
                     Collections.sort(venuesList,new VenueDistanceComparator());
                     myAdapter = new VenueAdapter(this, venuesList);
                     recyclerView.setAdapter(myAdapter);
+//                    Toast.makeText(getApplicationContext(), "Sorted by Distance",
+//                            Toast.LENGTH_SHORT).show();
                     Snackbar snackbar = Snackbar.make(findViewById(R.id.root),"Sorted by Distance", Snackbar.LENGTH_SHORT);
                     snackbar.show();
                 }
                 SORTING = 0;
+                return true;
+            case R.id.inAppDriverMode:
+                if(item.isChecked()){
+                    // If item already checked then unchecked it
+                    item.setChecked(false);
+                    INAPPDRIVERMODE = false;
+                }else{
+                    // If item is unchecked then checked it
+                    item.setChecked(true);
+                    INAPPDRIVERMODE = true;
+                }
+                return true;
+            case R.id.driverMode:
+                if(item.isChecked()){
+                    // If item already checked then unchecked it
+                    item.setChecked(false);
+                    DRIVERMODE = false;
+                }else{
+                    // If item is unchecked then checked it
+                    item.setChecked(true);
+                    DRIVERMODE = true;
+                }
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
     }
 
-    //Initialize sqlite database
-    public void initDatabase(){
-        db = new com.example.android.myapplication.DatabaseHandler(this);
-    }
-
-
-    /*
+    /**
      * Initializing collapsing toolbar
      * Will show and hide the toolbar title on scroll
      */
@@ -372,9 +408,6 @@ public class MainActivity extends AppCompatActivity implements ConnectionCallbac
         changeLocation();
     }
 
-    /*
-        Updates latitude and longitude and passes it to the response class
-     */
     private void changeLocation() {
         if (refresh_activity) {
             if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
@@ -390,10 +423,6 @@ public class MainActivity extends AppCompatActivity implements ConnectionCallbac
                 pd.setCancelable(false);
                 pd.show();
                 final Context mContext = this;
-
-                /*
-                    UI thread is used to show progress dialog box and mthread is used to get last known location.
-                */
 
                 final Handler handler = new Handler() {
                     @Override
@@ -429,9 +458,13 @@ public class MainActivity extends AppCompatActivity implements ConnectionCallbac
         }
     }
 
-    /*
-        NO need to take permission for access course location if permission for access fine location is granted.
-    */
+    private void initProgressDialog(){
+        mProgressDialog = new ProgressDialog(this);
+        mProgressDialog.setMessage("Retreiving Location ");
+        mProgressDialog.setCancelable(false);
+        mProgressDialog.setIndeterminate(true);
+
+    }
 
     public void permission(int ACCESS) {
         if(ACCESS == MY_ACCESS_FINE_LOCATION) {
