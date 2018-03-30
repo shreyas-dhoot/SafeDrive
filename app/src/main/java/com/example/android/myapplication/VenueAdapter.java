@@ -53,8 +53,8 @@ import static com.example.android.myapplication.MainActivity.db;
 public class VenueAdapter extends RecyclerView.Adapter<VenueAdapter.MyViewHolder> {
 
 
-    private final String        CLIENT_ID = "Y5OO4ER5INNX034EARQRNY2NR1CNWNKNZ04L0IEUYJNLLFOS";
-    private final String        CLIENT_SECRET = "0ZUI1RJHNUTAAGVP503PZBZOMPEXHUQ3S33BPGXZR00LOO1U";
+    private final String        CLIENT_ID = "553TDCNOZW5A3KAJW5PVPYP0KXSMYONPKNXPJSYHUNUE2M1C";
+    private final String        CLIENT_SECRET = "XRXHA01SCCOTOERO0UILSKGKIGDAUAUU1H4AGBBAXPR20TX0";
     private final String        PREFIX_URL = "https://api.foursquare.com/v2/venues/";
     private final String        SUFFIX_URL = "?client_id="+CLIENT_ID+"&client_secret="+CLIENT_SECRET+"&v=20130815";
     private final String        SIZE_PHOTO = "100x100";
