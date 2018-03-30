@@ -93,9 +93,17 @@ public class VenueAdapter extends RecyclerView.Adapter<VenueAdapter.MyViewHolder
                             .setIcon(android.R.drawable.ic_dialog_alert)
                             .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int which) {
-                                    Intent intent = new Intent(context, Navigate.class);
+                                    if(!title.getText().equals("Vaishali Restaurant")) {
+                                        Intent intent = new Intent(context, Navigate.class);
 
-                                    context.startActivity(intent);
+                                        context.startActivity(intent);
+                                    }
+                                    else {
+                                        Intent intent = new Intent(context, Demo.class);
+
+                                        context.startActivity(intent);
+
+                                    }
                                 }
                             })
                             .setNegativeButton("No", null)                      //Do nothing on no
@@ -138,6 +146,7 @@ public class VenueAdapter extends RecyclerView.Adapter<VenueAdapter.MyViewHolder
 
     @Override
     public void onBindViewHolder(final MyViewHolder holder, int position) {
+
         VenueObject venue = venueList.get(position);
         address = venue.getAddress();
         if(!address.equals("")) {

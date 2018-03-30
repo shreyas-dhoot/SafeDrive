@@ -3,21 +3,9 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@color/colorPrimaryDark">
+    android:background="@color/colorPrimaryDark"
+    android:weightSum="1">
 
-    <com.github.florent37.materialtextfield.MaterialTextField
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:mtf_openKeyboardOnFocus="true"
-        app:mtf_labelColor="@color/Black"
-        >
-        <EditText
-            android:hint="Enter Speed"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:id="@+id/speed" />
-    </com.github.florent37.materialtextfield.MaterialTextField>
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -30,48 +18,79 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Bike"
+            android:checked="true"
+            android:buttonTint="@color/Black"
             android:onClick="onvehicle"/>
         <RadioButton android:id="@+id/car"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Car"
+            android:buttonTint="@color/Black"
             android:onClick="onvehicle"/>
         <RadioButton android:id="@+id/bus"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Bus"
+            android:buttonTint="@color/Black"
             android:onClick="onvehicle"/>
     </RadioGroup>
-
-    <TextView
+    <com.github.florent37.materialtextfield.MaterialTextField
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Select Location"/>
-    <RadioGroup
-        android:layout_width="fill_parent"
+        app:mtf_openKeyboardOnFocus="true"
+        app:mtf_labelColor="@color/Black"
+        >
+    <EditText
+        android:hint="Enter Latitude"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
-        <RadioButton android:id="@+id/lat1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="JM"
-            android:onClick="onlocation"/>
-        <RadioButton android:id="@+id/lat2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="FC"
-            android:onClick="onlocatin"/>
-        <RadioButton android:id="@+id/lat3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="College"
-            android:onClick="onlocation"/>
-    </RadioGroup>
+        android:ems="10"
+        android:id="@+id/lati" />
+</com.github.florent37.materialtextfield.MaterialTextField>
+    <com.github.florent37.materialtextfield.MaterialTextField
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:mtf_openKeyboardOnFocus="true"
+        app:mtf_labelColor="@color/Black"
+        >
+    <EditText
+        android:hint="Enter Longitude"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:id="@+id/longi" />
+    </com.github.florent37.materialtextfield.MaterialTextField>
 
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Start Navigation"
         android:onClick="Start"/>
+
+    <SeekBar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/speedo"
+        android:thumbTint="@color/Black"
+        android:progressTint="@color/Black"
+        android:layout_weight="0.30" />
+
+    <TextView
+        android:text="0 kmph"
+        android:textAlignment="center"
+        android:textSize="70dp"
+        android:paddingTop="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:id="@+id/viewspeed" />
+
+    <TextView
+        android:text="Call Rejection Off"
+        android:layout_marginTop="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:textSize="35dp"
+        android:textAlignment="center"
+        android:id="@+id/mode" />
 
 </LinearLayout>

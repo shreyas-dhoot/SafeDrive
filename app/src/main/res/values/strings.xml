@@ -1,11 +1,6 @@
 <resources>
-    <string name="action_loc_update">Toggle Location Update</string>
-        <string name="app_name">Nearby Restaurants</string>
+    <string name="app_name">Nearby Restaurants</string>
         <string name="action_add_favourite">Add to Favourites</string>
         <string name="action_play_next">Play Next</string>
-        <string name="backdrop_title">LOVE FOOD</string>
-        <string name="backdrop_subtitle">Nearby Restaurants</string>
-        <string name="btn_start_location_updates">START LOCATION UPDATES</string>
-        <string name="btn_stop_location_updates">STOP LOCATION UPDATES</string>
 
 </resources>
