@@ -53,8 +53,11 @@ import static com.example.android.myapplication.MainActivity.db;
 public class VenueAdapter extends RecyclerView.Adapter<VenueAdapter.MyViewHolder> {
 
 
-    private final String        CLIENT_ID = "553TDCNOZW5A3KAJW5PVPYP0KXSMYONPKNXPJSYHUNUE2M1C";
-    private final String        CLIENT_SECRET = "XRXHA01SCCOTOERO0UILSKGKIGDAUAUU1H4AGBBAXPR20TX0";
+//    private final String        CLIENT_ID = "P5JRCNT0Q53CYFP1BPVCXVNYBBSPAEG5QGTXGZ2F5FEDYTSA";
+//    private final String        CLIENT_SECRET = "UJGODO0UKFU3QTXGYDJONYVVKJLFXGXAKFJSKFIVYQPR44SN";
+
+    private final String CLIENT_ID = "553TDCNOZW5A3KAJW5PVPYP0KXSMYONPKNXPJSYHUNUE2M1C";
+    private final String CLIENT_SECRET = "XRXHA01SCCOTOERO0UILSKGKIGDAUAUU1H4AGBBAXPR20TX0";
     private final String        PREFIX_URL = "https://api.foursquare.com/v2/venues/";
     private final String        SUFFIX_URL = "?client_id="+CLIENT_ID+"&client_secret="+CLIENT_SECRET+"&v=20130815";
     private final String        SIZE_PHOTO = "100x100";
@@ -90,13 +93,18 @@ public class VenueAdapter extends RecyclerView.Adapter<VenueAdapter.MyViewHolder
                             .setIcon(android.R.drawable.ic_dialog_alert)
                             .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int which) {
-                                    if(!title.getText().equals("Vaishali Restaurant")) {
+                                    if(title.getText().equals("Vaishali Restaurant")) {
+                                        Intent intent = new Intent(context, Demo.class);
+
+                                        context.startActivity(intent);
+                                    }
+                                    else if(title.getText().equals("Rupali Restaurant")) {
                                         Intent intent = new Intent(context, Navigate.class);
 
                                         context.startActivity(intent);
                                     }
-                                    else {
-                                        Intent intent = new Intent(context, Demo.class);
+                                    else  {
+                                        Intent intent = new Intent(context, weatherpage.class);
 
                                         context.startActivity(intent);
 
@@ -143,7 +151,6 @@ public class VenueAdapter extends RecyclerView.Adapter<VenueAdapter.MyViewHolder
 
     @Override
     public void onBindViewHolder(final MyViewHolder holder, int position) {
-
         VenueObject venue = venueList.get(position);
         address = venue.getAddress();
         if(!address.equals("")) {
@@ -187,7 +194,17 @@ public class VenueAdapter extends RecyclerView.Adapter<VenueAdapter.MyViewHolder
         holder.category.setText(venue.getCategory());
         holder.timing.setText("22:00 to 2:00");
 
-        if(!venue.getvenueID().equals("DEFAULT")) {
+        if(venue.getvenueID().equals("DEFAULT")) {
+            new downloadData(holder, PREFIX_URL + "4b3b174af964a520cd7025e3" + "/photos" + SUFFIX_URL, venue).execute();
+            new downloadData(holder, PREFIX_URL + "4b3b174af964a520cd7025e3" + "/likes" + SUFFIX_URL, venue).execute();
+        }
+
+        else if(venue.getvenueID().equals("DEFAULT_2")){
+            new downloadData(holder, PREFIX_URL + "54ba1c10498e0f55cafc996e" + "/photos" + SUFFIX_URL, venue).execute();
+            new downloadData(holder, PREFIX_URL + "54ba1c10498e0f55cafc996e" + "/likes" + SUFFIX_URL, venue).execute();
+        }
+
+        else{
             if(venue.getphotJSON().equals("")) {
                 new downloadData(holder, PREFIX_URL + venue.getvenueID() + "/photos" + SUFFIX_URL, venue).execute();
                 new downloadData(holder, PREFIX_URL + venue.getvenueID() + "/likes" + SUFFIX_URL, venue).execute();
@@ -197,10 +214,6 @@ public class VenueAdapter extends RecyclerView.Adapter<VenueAdapter.MyViewHolder
                 int aa = venue.getLikes();
                 holder.stat.setText(Integer.toString(aa) + " Likes : " + stat);
             }
-        }
-        else {
-            new downloadData(holder, PREFIX_URL + "4b3b174af964a520cd7025e3" + "/photos" + SUFFIX_URL, venue).execute();
-            new downloadData(holder, PREFIX_URL + "4b3b174af964a520cd7025e3" + "/likes" + SUFFIX_URL, venue).execute();
         }
         // loading album cover using Glide library
 //        Glide.with(mContext).load(img).into(holder.thumbnail);

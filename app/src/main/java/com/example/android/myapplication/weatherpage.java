@@ -1,42 +1,32 @@
 package com.example.android.myapplication;
 
-import android.location.Address;
-import android.location.Geocoder;
-import android.os.Bundle;
-import android.os.Handler;
 import android.os.StrictMode;
 import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.SeekBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
-import java.util.List;
-import java.util.Locale;
 
-/**
- * Created by aditya on 30/3/18.
- */
-
-public class Navigate extends AppCompatActivity{
-    TextView viewspeed = null, mode = null;
-    EditText lati = null, longi = null;
-    SeekBar speedo = null;
+public class weatherpage extends AppCompatActivity {
+    TextView viewspeed = null, mode = null, viewjam = null;
+    SeekBar speedo = null, jam = null;
     String spd = "10";
     String vehicle = "0";
-    String lat = null;
-    String lon = null;
-    String address = null;
+    String weath = "0";
+    String traffic = "3";
     @Override
-    protected void onCreate(final Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.weatherpage);
         int SDK_INT = android.os.Build.VERSION.SDK_INT;
         if (SDK_INT > 8)
         {
@@ -46,18 +36,37 @@ public class Navigate extends AppCompatActivity{
             //your codes here
 
         }
-        super.onCreate(savedInstanceState);
-
-        setContentView(R.layout.navigate);
-        lati = (EditText)findViewById(R.id.lati);
-        lati.setText("18.52175");
-        longi = (EditText)findViewById(R.id.longi);
-        longi.setText("73.8410277");
+        viewjam = (TextView)findViewById(R.id.trafficview);
         speedo = (SeekBar)findViewById(R.id.speedo);
         mode = (TextView)findViewById(R.id.mode);
         viewspeed = (TextView)findViewById(R.id.viewspeed);
+        jam = (SeekBar)findViewById(R.id.jam);
+        jam.setMax(100);
+        jam.setProgress(30);
         speedo.setMax(120);
         speedo.setProgress(10);
+        jam.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                traffic = Double.toString((double)progress/10);
+                viewjam.setText(traffic + " t");
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+                boolean ch = sendtoserver(spd, vehicle, traffic, weath);
+                if(ch)
+                    mode.setText("Call Rejection Off");
+                else
+                    mode.setText("Call Rejection On");
+                MainActivity.setCheck(!ch);
+            }
+        });
         speedo.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
@@ -74,10 +83,7 @@ public class Navigate extends AppCompatActivity{
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
-                lat = lati.getText().toString();
-                lon = longi.getText().toString();
-                address = getAddress(Double.parseDouble(lati.getText().toString()), Double.parseDouble(longi.getText().toString()));
-                boolean ch = sendtoserver(lat, lon, spd, vehicle, address);
+                boolean ch = sendtoserver(spd, vehicle, traffic, weath);
                 if(ch)
                     mode.setText("Call Rejection Off");
                 else
@@ -87,27 +93,6 @@ public class Navigate extends AppCompatActivity{
             }
         });
     }
-    public String getAddress(double lat, double lng) {
-        Geocoder geocoder = new Geocoder(Navigate.this, Locale.getDefault());
-        try {
-            List<Address> addresses = geocoder.getFromLocation(lat, lng, 1);
-            Address obj = addresses.get(0);
-            String add = obj.getAddressLine(0);
-
-            Log.v("IGA", "Address" + add);
-            return add;
-            // Toast.makeText(this, "Address=>" + add,
-            // Toast.LENGTH_SHORT).show();
-
-            // TennisAppActivity.showDialog(add);
-        } catch (IOException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-            Toast.makeText(this, e.getMessage(), Toast.LENGTH_SHORT).show();
-        }
-        return "LOL";
-    }
-
 
     public void onvehicle(View view) {
         // Is the button now checked?
@@ -118,23 +103,46 @@ public class Navigate extends AppCompatActivity{
             case R.id.bike:
                 if (checked)
                     vehicle = "0";
-                    break;
+                break;
             case R.id.car:
                 if (checked)
                     vehicle = "1";
-                    break;
+                break;
             case R.id.bus:
                 if (checked)
                     vehicle = "2";
-                    break;
+                break;
         }
-    }
 
-    public void Start(View view){
-        lat = lati.getText().toString();
-        lon = longi.getText().toString();
-        address = getAddress(Double.parseDouble(lati.getText().toString()), Double.parseDouble(longi.getText().toString()));
-        boolean ch = sendtoserver(lat, lon, spd, vehicle, address);
+        boolean ch = sendtoserver(spd, vehicle, traffic, weath);
+        if(ch)
+            mode.setText("Call Rejection Off");
+        else
+            mode.setText("Call Rejection On");
+        MainActivity.setCheck(!ch);
+
+    }
+    public void onweather(View view) {
+        // Is the button now checked?
+        boolean checked = ((RadioButton) view).isChecked();
+
+        // Check which radio button was clicked
+        switch(view.getId()) {
+            case R.id.thunder:
+                if (checked)
+                    weath = "0";
+                break;
+            case R.id.rain:
+                if (checked)
+                    weath = "1";
+                break;
+            case R.id.cloudy:
+                if (checked)
+                    weath = "2";
+                break;
+        }
+
+        boolean ch = sendtoserver(spd, vehicle, traffic, weath);
         if(ch)
             mode.setText("Call Rejection Off");
         else
@@ -142,9 +150,11 @@ public class Navigate extends AppCompatActivity{
         MainActivity.setCheck(!ch);
     }
 
-    public boolean sendtoserver(String lat, String longi, String speed, String type, String address){
+
+
+    public boolean sendtoserver(String speed, String vehicle, String traffic, String weath){
         DatagramSocket socket = null;
-        String message = lat + "#" + longi + "#" + speed + "#" + type + "#" + address;
+        String message = speed + "#" + vehicle + "#" + traffic + "#" + weath;
         byte[] messageData = message.getBytes();
         boolean ret = false;
         try {
@@ -179,7 +189,4 @@ public class Navigate extends AppCompatActivity{
 
         return ret;
     }
-
-
-
 }

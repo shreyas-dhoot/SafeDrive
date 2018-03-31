@@ -34,63 +34,90 @@
             android:buttonTint="@color/Black"
             android:onClick="onvehicle"/>
     </RadioGroup>
-    <com.github.florent37.materialtextfield.MaterialTextField
+    <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:mtf_openKeyboardOnFocus="true"
-        app:mtf_labelColor="@color/Black"
-        >
-    <EditText
-        android:hint="Enter Latitude"
-        android:layout_width="match_parent"
+        android:text="Weather"/>
+    <RadioGroup
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:ems="10"
-        android:id="@+id/lati" />
-</com.github.florent37.materialtextfield.MaterialTextField>
-    <com.github.florent37.materialtextfield.MaterialTextField
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:mtf_openKeyboardOnFocus="true"
-        app:mtf_labelColor="@color/Black"
-        >
-    <EditText
-        android:hint="Enter Longitude"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:id="@+id/longi" />
-    </com.github.florent37.materialtextfield.MaterialTextField>
-
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Update"
-        android:onClick="Start"/>
-
-    <SeekBar
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/speedo"
-        android:thumbTint="@color/Black"
-        android:progressTint="@color/Black"
-        android:layout_weight="0.30" />
+        android:orientation="horizontal">
+        <RadioButton android:id="@+id/thunder"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Thunderstorm"
+            android:checked="true"
+            android:buttonTint="@color/Black"
+            android:onClick="onweather"/>
+        <RadioButton android:id="@+id/rain"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Rain"
+            android:buttonTint="@color/Black"
+            android:onClick="onweather"/>
+        <RadioButton android:id="@+id/cloudy"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Cloudy"
+            android:buttonTint="@color/Black"
+            android:onClick="onweather"/>
+    </RadioGroup>
 
     <TextView
-        android:text="10 kmph"
-        android:textAlignment="center"
-        android:textSize="70dp"
-        android:paddingTop="10dp"
         android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:id="@+id/viewspeed" />
+        android:layout_height="wrap_content"
+        android:text="Traffic Jam"/>
+    <SeekBar
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:id="@+id/jam"
+        android:thumbTint="@color/Black"
+        android:progressTint="@color/Black" />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Speed"/>
+    <SeekBar
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:id="@+id/speedo"
+        android:thumbTint="@color/Black"
+        android:progressTint="@color/Black" />
+
 
     <TextView
         android:text="Call Rejection Off"
         android:layout_marginTop="20dp"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:textSize="35dp"
+        android:layout_height="49dp"
+        android:textSize="20dp"
+        android:paddingTop="10dp"
         android:textAlignment="center"
         android:id="@+id/mode" />
+
+    <LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <TextView
+    android:text="10 kmph"
+    android:textAlignment="center"
+    android:textSize="40dp"
+    android:paddingTop="5dp"
+    android:layout_width="180dp"
+    android:layout_height="60dp"
+    android:id="@+id/viewspeed" />
+    <TextView
+        android:text="3 t"
+        android:textAlignment="center"
+        android:layout_width="180dp"
+        android:paddingTop="5dp"
+        android:layout_height="60dp"
+        android:textSize="40dp"
+        android:id="@+id/trafficview"
+        android:layout_gravity="end"
+        android:layout_weight="0.15" />
+
+
+    </LinearLayout>
 
 </LinearLayout>

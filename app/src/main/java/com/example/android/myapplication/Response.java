@@ -29,6 +29,9 @@ import static com.example.android.myapplication.MainActivity.venuesList;
 
 class Response extends AsyncTask<View, Void, String> {
 
+//    private final String CLIENT_ID = "P5JRCNT0Q53CYFP1BPVCXVNYBBSPAEG5QGTXGZ2F5FEDYTSA";
+//    private final String CLIENT_SECRET = "UJGODO0UKFU3QTXGYDJONYVVKJLFXGXAKFJSKFIVYQPR44SN";
+
     private final String CLIENT_ID = "553TDCNOZW5A3KAJW5PVPYP0KXSMYONPKNXPJSYHUNUE2M1C";
     private final String CLIENT_SECRET = "XRXHA01SCCOTOERO0UILSKGKIGDAUAUU1H4AGBBAXPR20TX0";
 
@@ -189,6 +192,17 @@ class Response extends AsyncTask<View, Void, String> {
                     poi.setRating(7);
                     poi.setStat(63,63);
                     temp.add(0,poi);
+
+                    poi = new VenueObject();
+                    poi.setName("Rupali Restaurant");
+                    poi.setvenueID("DEFAULT_2");
+                    poi.setDistance(2200);
+                    poi.setAddress("Fergusson College Road, Opposite British Library");
+                    poi.setCity("Pune");
+                    poi.setCategory("Fast Food");
+                    poi.setRating(7);
+                    poi.setStat(63,63);
+                    temp.add(1, poi);
                 }
             }
 
