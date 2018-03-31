@@ -29,8 +29,8 @@ import static com.example.android.myapplication.MainActivity.venuesList;
 
 class Response extends AsyncTask<View, Void, String> {
 
-    private final String CLIENT_ID = "Y5OO4ER5INNX034EARQRNY2NR1CNWNKNZ04L0IEUYJNLLFOS";
-    private final String CLIENT_SECRET = "0ZUI1RJHNUTAAGVP503PZBZOMPEXHUQ3S33BPGXZR00LOO1U";
+    private final String        CLIENT_ID = "P5JRCNT0Q53CYFP1BPVCXVNYBBSPAEG5QGTXGZ2F5FEDYTSA";
+    private final String        CLIENT_SECRET = "UJGODO0UKFU3QTXGYDJONYVVKJLFXGXAKFJSKFIVYQPR44SN";
 
 
     private RecyclerView        recyclerView;
@@ -160,6 +160,8 @@ class Response extends AsyncTask<View, Void, String> {
                                 if (venue.getJSONObject("location").has("address")) {
                                     if (venue.getJSONObject("location").has("city")) {
                                         poi.setCity(venue.getJSONObject("location").getString("city"));
+                                        poi.setLatitude(venue.getJSONObject("location").getDouble("lat"));
+                                        poi.setLongitude(venue.getJSONObject("location").getDouble("lng"));
                                         poi.setDistance(venue.getJSONObject("location").getInt("distance"));
                                         poi.setAddress(venue.getJSONObject("location").getJSONArray("formattedAddress"));
                                     }

@@ -18,6 +18,8 @@ public class VenueObject {
 	private float rating;
 	private String stat;
 	private String photoJSON;
+	private double latitude;
+	private double longitude;
 
 
 	public VenueObject() {
@@ -33,6 +35,8 @@ public class VenueObject {
 		this.address = "";
 		this.stat = "";
 		this.photoJSON = "";
+		this.latitude = 0;
+		this.longitude = 0;
 	}
 
 	public String getCity() {
@@ -140,6 +144,14 @@ public class VenueObject {
 	public String getStat(){
 		return stat;
 	}
+
+	public void setLatitude(double latitude){this.latitude = latitude;}
+
+	public double getLatitude() {return latitude;}
+
+	public void setLongitude(double longitude){this.longitude = longitude;}
+
+	public double getLongitude() {return longitude;}
 
 }
 
