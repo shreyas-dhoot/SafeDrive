@@ -97,7 +97,7 @@ public class MainActivity extends AppCompatActivity implements ConnectionCallbac
     NotificationCompat.Builder mBuilder;
     NotificationManager mNotificationManager;
 
-    private double latitude, longitude;
+    static double latitude, longitude;
 
     static ArrayList<VenueObject> venuesList;
 
@@ -162,7 +162,13 @@ public class MainActivity extends AppCompatActivity implements ConnectionCallbac
         setupGoogleApiClient();
     }
 
+    public static double getLatitude(){
+        return latitude;
+    }
 
+    public static double getLongitude(){
+        return longitude;
+    }
 
     public void initDriverModeNotification(){
         mBuilder = new NotificationCompat.Builder(this);

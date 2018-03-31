@@ -7,6 +7,7 @@ import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -53,11 +54,11 @@ import static com.example.android.myapplication.MainActivity.db;
 public class VenueAdapter extends RecyclerView.Adapter<VenueAdapter.MyViewHolder> {
 
 
-//    private final String        CLIENT_ID = "P5JRCNT0Q53CYFP1BPVCXVNYBBSPAEG5QGTXGZ2F5FEDYTSA";
-//    private final String        CLIENT_SECRET = "UJGODO0UKFU3QTXGYDJONYVVKJLFXGXAKFJSKFIVYQPR44SN";
+    private final String        CLIENT_ID = "P5JRCNT0Q53CYFP1BPVCXVNYBBSPAEG5QGTXGZ2F5FEDYTSA";
+    private final String        CLIENT_SECRET = "UJGODO0UKFU3QTXGYDJONYVVKJLFXGXAKFJSKFIVYQPR44SN";
 
-    private final String CLIENT_ID = "553TDCNOZW5A3KAJW5PVPYP0KXSMYONPKNXPJSYHUNUE2M1C";
-    private final String CLIENT_SECRET = "XRXHA01SCCOTOERO0UILSKGKIGDAUAUU1H4AGBBAXPR20TX0";
+//    private final String CLIENT_ID = "553TDCNOZW5A3KAJW5PVPYP0KXSMYONPKNXPJSYHUNUE2M1C";
+//    private final String CLIENT_SECRET = "XRXHA01SCCOTOERO0UILSKGKIGDAUAUU1H4AGBBAXPR20TX0";
     private final String        PREFIX_URL = "https://api.foursquare.com/v2/venues/";
     private final String        SUFFIX_URL = "?client_id="+CLIENT_ID+"&client_secret="+CLIENT_SECRET+"&v=20130815";
     private final String        SIZE_PHOTO = "100x100";
@@ -109,9 +110,20 @@ public class VenueAdapter extends RecyclerView.Adapter<VenueAdapter.MyViewHolder
                                         context.startActivity(intent);
                                     }
                                     else  {
-                                        Intent intent = new Intent(context, weatherpage.class);
-
-                                        context.startActivity(intent);
+                                        int i;
+                                        for (i = 3; i < venueList.size(); i++) {
+                                            if(title.getText().equals(venueList.get(i).getName())) {
+                                                Intent navigation = new Intent(Intent.ACTION_VIEW, Uri
+                                                        .parse("http://maps.google.com/maps?saddr="
+                                                                + MainActivity.getLatitude()  + ","
+                                                                + MainActivity.getLongitude() +
+                                                                "&daddr="
+                                                                + venueList.get(i).getLatitude() + "," + venueList.get(i).getLongitude()));
+                                                navigation.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK&Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS);
+                                                navigation.setClassName("com.google.android.apps.maps", "com.google.android.maps.MapsActivity");
+                                                context.startActivity(navigation);
+                                            }
+                                        }
 
                                     }
                                 }
