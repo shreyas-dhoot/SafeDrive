@@ -10,6 +10,7 @@ import android.os.SystemClock;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -28,7 +29,8 @@ import java.util.Locale;
 
 public class Demo extends AppCompatActivity {
     TextView latitude, longitude, vehicle, call, speed1;
-
+    ProgressBar progressBar;
+    int progressStatus = 0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         int SDK_INT = android.os.Build.VERSION.SDK_INT;
@@ -45,6 +47,8 @@ public class Demo extends AppCompatActivity {
         vehicle = (TextView) findViewById(R.id.vehicle);
         call = (TextView) findViewById(R.id.call);
         speed1 = (TextView) findViewById(R.id.speed);
+        progressBar = (ProgressBar) findViewById(R.id.progressBar);
+        progressBar.setProgress(0);
         call();
     }
 
@@ -75,13 +79,15 @@ public class Demo extends AppCompatActivity {
         Runnable runnable = new Runnable() {
             @Override
             public void run() {
-                for (int i = 0; i < latlon.length - 1; i++) {
+                for (int i = 0; i < latlon.length - 1 && progressStatus < 200; i++) {
                     final int value = i;
+
                     try {
                         Thread.sleep(5000);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
+                    progressStatus = progressStatus + 16;
                     handler.post(new Runnable() {
                         @Override
                         public void run() {
@@ -90,9 +96,15 @@ public class Demo extends AppCompatActivity {
                             vehicle.setText("Car");
                             double d = distance(latlon[value][0], latlon[value][1], latlon[value + 1][0], latlon[value + 1][1]);
                             double speed = d / time[value];
+
                             speed1.setText(String.valueOf(speed));
+                            if(value != 5)
+                                progressBar.setProgress(progressStatus);
+                            else
+                                progressBar.setProgress(100);
+
                             //String address = getAddress(Double.parseDouble(String.valueOf(latlon[value][0])), Double.parseDouble(String.valueOf(latlon[value][1])));
-                            boolean ch = sendtoserver(String.valueOf(latlon[value][0]), String.valueOf(latlon[value][1]), String.valueOf(speed), "1");
+                            boolean ch = sendtoserver(String.valueOf(speed), "1", "3", "2");
                             if (ch)
                                 call.setText("Yes");
                             else
@@ -167,7 +179,7 @@ public class Demo extends AppCompatActivity {
         return (rad * 180 / Math.PI);
     }
 
-    public boolean sendtoserver(String lat, String longi, String speed, String type) {
+   /* public boolean sendtoserver(String lat, String longi, String speed, String type) {
         DatagramSocket socket = null;
         String message = lat + "#" + longi + "#" + speed + "#" + type ;
         byte[] messageData = message.getBytes();
@@ -203,7 +215,44 @@ public class Demo extends AppCompatActivity {
         }
 
         return ret;
-    }
+    }*/
+   public boolean sendtoserver(String speed, String vehicle, String traffic, String weath){
+       DatagramSocket socket = null;
+       String message = speed + "#" + vehicle + "#" + traffic + "#" + weath;
+       byte[] messageData = message.getBytes();
+       boolean ret = false;
+       try {
+           InetAddress addr = InetAddress.getByName("192.168.43.9");
+           int port = 5006;
+           DatagramPacket sendPacket = new DatagramPacket(messageData, 0, messageData.length, addr, port);
+
+           socket = new DatagramSocket(port);
+           socket.send(sendPacket);
+           socket.disconnect();
+           socket.close();
+           String text;
+
+           int server_port = 5006;
+           byte[] msg = new byte[1];
+           DatagramPacket p = new DatagramPacket(msg, msg.length);
+           DatagramSocket s = new DatagramSocket(server_port);
+           s.receive(p);
+           text = new String(msg, 0, p.getLength());
+           if(text.equals("0"))
+               ret = false;
+           else
+               ret = true;
+           s.disconnect();
+           s.close();
+
+       } catch (UnknownHostException e) {
+           Log.e("MainActivity sendPacket", "getByName failed");
+       } catch (IOException e) {
+           Log.e("MainActivity sendPacket", "send failed");
+       }
+
+       return ret;
+   }
 }
 /*
 class Delay extends AsyncTask<Integer, Void, Boolean> {

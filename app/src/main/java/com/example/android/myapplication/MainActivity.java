@@ -589,7 +589,7 @@ public class MainActivity extends AppCompatActivity implements ConnectionCallbac
         if (mGoogleApiClient.isConnected()) {
             mGoogleApiClient.disconnect();
         }
-        //mNotificationManager.cancelAll();
+        mNotificationManager.cancelAll();
     }
 
     @Override
