@@ -93,13 +93,18 @@ public class VenueAdapter extends RecyclerView.Adapter<VenueAdapter.MyViewHolder
                             .setIcon(android.R.drawable.ic_dialog_alert)
                             .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int which) {
-                                    if(title.getText().equals("Vaishali Restaurant")) {
+                                    if(title.getText().equals("Vaishali to COEP (Simulation 1)")) {
                                         Intent intent = new Intent(context, Demo.class);
 
                                         context.startActivity(intent);
                                     }
-                                    else if(title.getText().equals("Rupali Restaurant")) {
+                                    else if(title.getText().equals("Simulation 2")) {
                                         Intent intent = new Intent(context, Navigate.class);
+
+                                        context.startActivity(intent);
+                                    }
+                                    else if(title.getText().equals("Simulation 3")) {
+                                        Intent intent = new Intent(context, weatherpage.class);
 
                                         context.startActivity(intent);
                                     }
@@ -194,14 +199,19 @@ public class VenueAdapter extends RecyclerView.Adapter<VenueAdapter.MyViewHolder
         holder.category.setText(venue.getCategory());
         holder.timing.setText("22:00 to 2:00");
 
-        if(venue.getvenueID().equals("DEFAULT")) {
+        if(venue.getvenueID().equals("DEFAULT_1")) {
             new downloadData(holder, PREFIX_URL + "4b3b174af964a520cd7025e3" + "/photos" + SUFFIX_URL, venue).execute();
             new downloadData(holder, PREFIX_URL + "4b3b174af964a520cd7025e3" + "/likes" + SUFFIX_URL, venue).execute();
         }
 
         else if(venue.getvenueID().equals("DEFAULT_2")){
-            new downloadData(holder, PREFIX_URL + "54ba1c10498e0f55cafc996e" + "/photos" + SUFFIX_URL, venue).execute();
-            new downloadData(holder, PREFIX_URL + "54ba1c10498e0f55cafc996e" + "/likes" + SUFFIX_URL, venue).execute();
+            new downloadData(holder, PREFIX_URL + "5181ed0f498e966cdcdbb21b" + "/photos" + SUFFIX_URL, venue).execute();
+            new downloadData(holder, PREFIX_URL + "5181ed0f498e966cdcdbb21b" + "/likes" + SUFFIX_URL, venue).execute();
+        }
+
+        else if(venue.getvenueID().equals("DEFAULT_3")){
+            new downloadData(holder, PREFIX_URL + "4b0587d1f964a520d1a222e3" + "/photos" + SUFFIX_URL, venue).execute();
+            new downloadData(holder, PREFIX_URL + "4b0587d1f964a520d1a222e3" + "/likes" + SUFFIX_URL, venue).execute();
         }
 
         else{

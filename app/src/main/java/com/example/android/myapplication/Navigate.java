@@ -78,10 +78,14 @@ public class Navigate extends AppCompatActivity{
                 lon = longi.getText().toString();
                 address = getAddress(Double.parseDouble(lati.getText().toString()), Double.parseDouble(longi.getText().toString()));
                 boolean ch = sendtoserver(lat, lon, spd, vehicle, address);
-                if(ch)
-                    mode.setText("Call Rejection Off");
+                if(MainActivity.getDriverMode()) {
+                    if (ch)
+                        mode.setText("Call Rejection Off");
+                    else
+                        mode.setText("Call Rejection On");
+                }
                 else
-                    mode.setText("Call Rejection On");
+                    mode.setText("Call Rejection Off");
                 MainActivity.setCheck(!ch);
 
             }

@@ -589,7 +589,7 @@ public class MainActivity extends AppCompatActivity implements ConnectionCallbac
         if (mGoogleApiClient.isConnected()) {
             mGoogleApiClient.disconnect();
         }
-        mNotificationManager.cancelAll();
+        //mNotificationManager.cancelAll();
     }
 
     @Override
@@ -624,6 +624,9 @@ public class MainActivity extends AppCompatActivity implements ConnectionCallbac
 
     public static boolean getCheck(){
         return check;
+    }
+    public static boolean getDriverMode(){
+        return DRIVERMODE;
     }
 
     public static void setCheck(boolean ch){

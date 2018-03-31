@@ -28,7 +28,7 @@ public class PhoneCallReceiver extends BroadcastReceiver {
             m.setAccessible(true);
             telephonyService = (ITelephony) m.invoke(telephony);
             telephonyService.silenceRinger();
-            if(MainActivity.getCheck()) {
+            if(MainActivity.getCheck() && MainActivity.getDriverMode()) {
                 telephonyService.endCall();
             }
         } catch (Exception e) {
