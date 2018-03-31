@@ -63,48 +63,61 @@
             android:onClick="onweather"/>
     </RadioGroup>
 
-
-    <Button
+    <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Start Navigation"
-        android:onClick="Start"/>
-
+        android:text="Traffic Jam"/>
     <SeekBar
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="80dp"
         android:id="@+id/jam"
         android:thumbTint="@color/Black"
-        android:progressTint="@color/Black"
-        android:layout_weight="0.30" />
-
-    <SeekBar
+        android:progressTint="@color/Black" />
+    <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:text="Speed"/>
+    <SeekBar
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
         android:id="@+id/speedo"
         android:thumbTint="@color/Black"
-        android:progressTint="@color/Black"
-        android:layout_weight="0.30" />
+        android:progressTint="@color/Black" />
 
-    <TextView
-        android:text="0 kmph"
-        android:textAlignment="center"
-        android:textSize="40dp"
-        android:paddingTop="10dp"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:id="@+id/viewspeed" />
 
     <TextView
         android:text="Call Rejection Off"
         android:layout_marginTop="20dp"
         android:layout_width="match_parent"
-        android:layout_height="25dp"
+        android:layout_height="49dp"
         android:textSize="20dp"
+        android:paddingTop="10dp"
         android:textAlignment="center"
         android:id="@+id/mode" />
 
+    <LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <TextView
+    android:text="10 kmph"
+    android:textAlignment="center"
+    android:textSize="40dp"
+    android:paddingTop="5dp"
+    android:layout_width="180dp"
+    android:layout_height="60dp"
+    android:id="@+id/viewspeed" />
+    <TextView
+        android:text="3 t"
+        android:textAlignment="center"
+        android:layout_width="180dp"
+        android:paddingTop="5dp"
+        android:layout_height="60dp"
+        android:textSize="40dp"
+        android:id="@+id/trafficview"
+        android:layout_gravity="end"
+        android:layout_weight="0.15" />
 
 
+    </LinearLayout>
 
 </LinearLayout>

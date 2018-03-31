@@ -93,13 +93,18 @@ public class VenueAdapter extends RecyclerView.Adapter<VenueAdapter.MyViewHolder
                             .setIcon(android.R.drawable.ic_dialog_alert)
                             .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int which) {
-                                    if(!title.getText().equals("Vaishali Restaurant")) {
+                                    if(title.getText().equals("Vaishali Restaurant")) {
+                                        Intent intent = new Intent(context, Demo.class);
+
+                                        context.startActivity(intent);
+                                    }
+                                    else if(title.getText().equals("Rupali Restaurant")) {
                                         Intent intent = new Intent(context, Navigate.class);
 
                                         context.startActivity(intent);
                                     }
-                                    else {
-                                        Intent intent = new Intent(context, Demo.class);
+                                    else  {
+                                        Intent intent = new Intent(context, weatherpage.class);
 
                                         context.startActivity(intent);
 

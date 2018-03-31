@@ -64,7 +64,7 @@
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Start Navigation"
+        android:text="Update"
         android:onClick="Start"/>
 
     <SeekBar
@@ -76,7 +76,7 @@
         android:layout_weight="0.30" />
 
     <TextView
-        android:text="0 kmph"
+        android:text="10 kmph"
         android:textAlignment="center"
         android:textSize="70dp"
         android:paddingTop="10dp"
